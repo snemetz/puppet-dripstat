@@ -1,0 +1,17 @@
+language: ruby
+rvm:
+  - 1.9.3
+script: "rake test"
+#addons:
+#  code_climate:
+#    repo_token: d878083b6a2d4f98bfe974506e9b214c5604551afc9ba1736ea9612b945496fd
+env:
+  - PUPPET_VERSION=2.7.23
+  - PUPPET_VERSION=3.4.3
+  - PUPPET_VERSION=3.6.2
+branches:
+  only:
+    - master
+notifications:
+  email: false
+gemfile: Gemfile

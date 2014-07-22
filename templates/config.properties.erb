@@ -1,0 +1,17 @@
+#
+# This file configures the DripStat Agent. DripStat monitors
+# Java applications.
+# For more information, visit www.dripstat.com.
+#
+# This section is for settings common to all environments.
+#-------------------------------------------------------------------
+# The name by which to identify your jvm in the DripStat dashboard
+appName= <%= @dripstat_app_name %>
+# Your license key
+licenseKey=<%= @dripstat_license_key %>
+# Can be set to off, trace, info, warn, error, fatal
+logLevel= <%= @dripstat_agent_loglevel %>
+# Set this to true to output everything that is sent to dripstat servers
+auditMode= <%= @dripstat_agent_auditmode %>
+# Set this to false to use 'http' instead of 'https' to connect to dripstat servers
+useSSL= <%= @dripstat_use_ssl %>
