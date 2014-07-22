@@ -11,7 +11,7 @@ This module can install DripStat's monitor agent on your servers. <br />
 
 ## Table of Contents
 
-* [Installation](#install)
+* [Installation](#installation)
 * [Usage](#usage)
  
 ## Installation
