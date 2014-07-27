@@ -1,7 +1,8 @@
 Master
 [![Build Status](https://travis-ci.org/snemetz/puppet-dripstat.svg)](https://travis-ci.org/snemetz/puppet-dripstat)
 [![Coverage Status](https://coveralls.io/repos/snemetz/puppet-dripstat/badge.png)](https://coveralls.io/r/snemetz/puppet-dripstat)
-[![Dependency Status](https://gemnasium.com/snemetz/puppet-dripstat.png)](http://gemnasium.com/snemetz/puppet-dripstat)
+[![Dependency Status](https://gemnasium.com/snemetz/puppet-dripstat.png)](http://gemnasium.com/snemetz/puppet-dripstat#development-dependencies)
+[![Repo Size](https://reposs.herokuapp.com/?path=snemetz/puppet-dripstat)]
 
 puppet-dripstat
 ===============
@@ -23,6 +24,8 @@ This module can install DripStat's monitor agent on your servers. <br />
 ## Usage
 
 ```
+  TODO: Add remove
+
   dripstat::application_monitoring { 'dripstat application monitoring for appserver':
     dripstat_version         => '3.5.0',
     dripstat_app_root_dir    => '/opt/appserver',

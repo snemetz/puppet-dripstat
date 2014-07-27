@@ -88,7 +88,7 @@ define dripstat::application_monitoring(
   case $dripstat_use_ssl {
     true, false: { $dripstat_use_ssl_real = $dripstat_use_ssl }
     default: {
-      fail("Newrelic::Application_monitoring[${dripstat_use_ssl}]: parameter dripstat_use_ssl must be a boolean")
+      fail("Dripstat::Application_monitoring[${dripstat_use_ssl}]: parameter dripstat_use_ssl must be a boolean")
     }
   }
 
