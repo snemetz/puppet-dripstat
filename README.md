@@ -1,8 +1,8 @@
 Master
 [![Build Status](https://travis-ci.org/snemetz/puppet-dripstat.svg)](https://travis-ci.org/snemetz/puppet-dripstat)
 [![Coverage Status](https://coveralls.io/repos/snemetz/puppet-dripstat/badge.png)](https://coveralls.io/r/snemetz/puppet-dripstat)
-[![Dependency Status](https://gemnasium.com/snemetz/puppet-dripstat.png)](http://gemnasium.com/snemetz/puppet-dripstat#development-dependencies)
-[![Repo Size](https://reposs.herokuapp.com/?path=snemetz/puppet-dripstat)]
+[![Dependency Status](https://gemnasium.com/snemetz/puppet-dripstat.svg)](http://gemnasium.com/snemetz/puppet-dripstat#development-dependencies)
+[![Repo Size](https://reposs.herokuapp.com/?path=snemetz/puppet-dripstat)]()
 
 puppet-dripstat
 ===============
