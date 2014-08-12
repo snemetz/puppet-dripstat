@@ -46,7 +46,7 @@
 # Sample Usage:
 #
 # dripstat::application_monitoring { 'dripstat application monitoring':
-#   dripstat_version        => '2.18.0',
+#   dripstat_version        => '3.6.0',
 #   dripstat_app_root_dir   => '/opt/appserver',
 #   dripstat_app_owner       => '<your app user>',
 #   dripstat_app_group      => '<your app group>',
