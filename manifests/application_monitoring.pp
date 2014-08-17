@@ -37,12 +37,6 @@
 # - Required: no
 # - Content: true | false
 #
-# [*dripstat_record_sql*] When transaction tracer is on, SQL statements can optionally be recorded. The recorder has three modes, "off" which sends no
-#                         SQL, "raw" which sends the SQL statement in its original form, and "obfuscated", which strips out numeric and string literals.
-#                         (default: obfuscated).
-# - Required: no
-# - Content: 'obfuscated' | 'raw' | 'off'
-#
 # Sample Usage:
 #
 # dripstat::application_monitoring { 'dripstat application monitoring':
@@ -57,34 +51,41 @@
 #   dripstat_use_ssl         => true,
 # }
 #
+# TODO:
+# Add parameter for removing $install/present = true/false
 define dripstat::application_monitoring(
-  $dripstat_version=undef,
-  $dripstat_app_root_dir=undef,
-  $dripstat_app_owner='root',
-  $dripstat_app_group='root',
-  $dripstat_license_key=undef,
-  $dripstat_app_name='My Application',
-  $dripstat_agent_loglevel='info',
-  $dripstat_agent_auditmode=false,
-  $dripstat_use_ssl=true
+  $dripstat_version         = undef,
+  $dripstat_app_root_dir    = undef,
+  $dripstat_app_owner       = 'root',
+  $dripstat_app_group       = 'root',
+  $dripstat_license_key     = undef,
+  $dripstat_app_name        = 'My Application',
+  $dripstat_agent_loglevel  = 'info',
+  $dripstat_agent_auditmode = false,
+  $dripstat_use_ssl         = true
 ) {
 
+# Only test if installing
   if $dripstat_version == undef {
     fail('The version of the DripStat agent must be provided')
   }
 
+# Always test
   if $dripstat_app_root_dir == undef {
     fail('The root directory of the application server installation must be provided')
   }
 
+# Only test if installing
   if $dripstat_license_key == undef {
     fail('The license key associated with your DripStat account must be provided')
   }
 
+# Only test if installing
   if ! ($dripstat_agent_loglevel in ['off' , 'trace' , 'info' , 'warn' , 'error' , 'fatal']) {
     fail("${dripstat_agent_loglevel} is not one of valid predefined values for agent loglevels")
   }
 
+# Only test if installing
   case $dripstat_use_ssl {
     true, false: { $dripstat_use_ssl_real = $dripstat_use_ssl }
     default: {
@@ -92,12 +93,17 @@ define dripstat::application_monitoring(
     }
   }
 
+#Create 1 vars
+#file state & dir state ?
+#
+# absent or directory
   file { "${dripstat_app_root_dir}/dripstat" :
     ensure => directory,
     owner  => $dripstat_app_owner,
     group  => $dripstat_app_group,
   }
 
+# absent or directory
   file { "${dripstat_app_root_dir}/dripstat/logs" :
     ensure  => directory,
     owner   => $dripstat_app_owner,
@@ -105,6 +111,7 @@ define dripstat::application_monitoring(
     require => File["${dripstat_app_root_dir}/dripstat"],
   }
 
+# absent or file
   file { "${dripstat_app_root_dir}/dripstat/dripstat.jar" :
     ensure  => file,
     owner   => $dripstat_app_owner,
@@ -113,6 +120,7 @@ define dripstat::application_monitoring(
     require => File["${dripstat_app_root_dir}/dripstat"],
   }
 
+# absent or file
   file { "${dripstat_app_root_dir}/dripstat/config.properties" :
     ensure  => file,
     owner   => $dripstat_app_owner,
