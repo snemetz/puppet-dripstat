@@ -7,7 +7,8 @@ group :test do
   gem 'puppet-lint', '~> 0.4.0.pre1'
   gem 'rspec', '~> 2.14.1'
   #gem 'rspec-puppet', '~> 1.0.1'
-  gem 'rspec-puppet', :git => 'https://github.com/rodjek/rspec-puppet.git'
+  #gem 'rspec-puppet', :git => 'https://github.com/rodjek/rspec-puppet.git'
+  gem 'rspec-puppet', '=> 1.0.1', :github => 'rodjek/rspec-puppet'
   gem 'puppetlabs_spec_helper', '~> 0.7.0'
   gem 'coveralls', :require => false
   #gem 'codeclimate-test-reporter', :require => nil
