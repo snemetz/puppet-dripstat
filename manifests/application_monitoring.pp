@@ -37,22 +37,25 @@
 # - Required: no
 # - Content: true | false
 #
+# [*dripstat_install*] Install or remove agent
+# - Required: no
+# - Content: true | false
+#
 # Sample Usage:
 #
 # dripstat::application_monitoring { 'dripstat application monitoring':
-#   dripstat_version        => '3.6.0',
-#   dripstat_app_root_dir   => '/opt/appserver',
+#   dripstat_version         => '3.6.0',
+#   dripstat_app_root_dir    => '/opt/appserver',
 #   dripstat_app_owner       => '<your app user>',
-#   dripstat_app_group      => '<your app group>',
+#   dripstat_app_group       => '<your app group>',
 #   dripstat_license_key     => '<your license key>',
 #   dripstat_app_name        => '<your app name>',
 #   dripstat_agent_loglevel  => '<loglevel>',
 #   dripstat_agent_auditmode => false,
 #   dripstat_use_ssl         => true,
+#   dripstat_install         => true
 # }
 #
-# TODO:
-# Add parameter for removing $install/present = true/false
 define dripstat::application_monitoring(
   $dripstat_version         = undef,
   $dripstat_app_root_dir    = undef,
@@ -62,67 +65,74 @@ define dripstat::application_monitoring(
   $dripstat_app_name        = 'My Application',
   $dripstat_agent_loglevel  = 'info',
   $dripstat_agent_auditmode = false,
-  $dripstat_use_ssl         = true
+  $dripstat_use_ssl         = true,
+  $dripstat_install         = true
 ) {
 
-# Only test if installing
-  if $dripstat_version == undef {
-    fail('The version of the DripStat agent must be provided')
+  case $dripstat_install {
+    false:{
+            $dripstat_dir  = absent
+            $dripstat_file = absent
+          }
+    true: {
+            $dripstat_dir  = directory
+            $dripstat_file = file
+          }
+    default: {
+      fail("Dripstat::Application_monitoring[${dripstat_install}]: parameter dripstat_install must be a boolean")
+    }
   }
 
-# Always test
+  if $dripstat_install {
+    if $dripstat_version == undef {
+      fail('The version of the DripStat agent must be provided')
+    }
+  }
+
   if $dripstat_app_root_dir == undef {
     fail('The root directory of the application server installation must be provided')
   }
 
-# Only test if installing
-  if $dripstat_license_key == undef {
-    fail('The license key associated with your DripStat account must be provided')
-  }
+  if $dripstat_install {
+    if $dripstat_license_key == undef {
+      fail('The license key associated with your DripStat account must be provided')
+    }
 
-# Only test if installing
-  if ! ($dripstat_agent_loglevel in ['off' , 'trace' , 'info' , 'warn' , 'error' , 'fatal']) {
-    fail("${dripstat_agent_loglevel} is not one of valid predefined values for agent loglevels")
-  }
+    if ! ($dripstat_agent_loglevel in ['off' , 'trace' , 'info' , 'warn' , 'error' , 'fatal']) {
+      fail("${dripstat_agent_loglevel} is not one of valid predefined values for agent loglevels")
+    }
 
-# Only test if installing
-  case $dripstat_use_ssl {
-    true, false: { $dripstat_use_ssl_real = $dripstat_use_ssl }
-    default: {
-      fail("Dripstat::Application_monitoring[${dripstat_use_ssl}]: parameter dripstat_use_ssl must be a boolean")
+    case $dripstat_use_ssl {
+      true, false: { $dripstat_use_ssl_real = $dripstat_use_ssl }
+      default: {
+        fail("Dripstat::Application_monitoring[${dripstat_use_ssl}]: parameter dripstat_use_ssl must be a boolean")
+      }
     }
   }
 
-#Create 1 vars
-#file state & dir state ?
-#
-# absent or directory
   file { "${dripstat_app_root_dir}/dripstat" :
-    ensure => directory,
+    ensure => $dripstat_dir,
     owner  => $dripstat_app_owner,
     group  => $dripstat_app_group,
   }
 
-# absent or directory
   file { "${dripstat_app_root_dir}/dripstat/logs" :
-    ensure  => directory,
+    ensure  => $dripstat_dir,
     owner   => $dripstat_app_owner,
     group   => $dripstat_app_group,
     require => File["${dripstat_app_root_dir}/dripstat"],
   }
 
-# absent or file
   file { "${dripstat_app_root_dir}/dripstat/dripstat.jar" :
-    ensure  => file,
+    ensure  => $dripstat_file,
     owner   => $dripstat_app_owner,
     group   => $dripstat_app_group,
     source  => "puppet:///modules/${module_name}/dripstat_agent-${dripstat_version}/dripstat.jar",
     require => File["${dripstat_app_root_dir}/dripstat"],
   }
 
-# absent or file
   file { "${dripstat_app_root_dir}/dripstat/config.properties" :
-    ensure  => file,
+    ensure  => $dripstat_file,
     owner   => $dripstat_app_owner,
     group   => $dripstat_app_group,
     content => template("${module_name}/config.properties.erb"),

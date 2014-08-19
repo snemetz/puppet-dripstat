@@ -24,7 +24,6 @@ This module can install DripStat's monitor agent on your servers. <br />
 ## Usage
 
 ```
-  TODO: Add remove
 
   dripstat::application_monitoring { 'dripstat application monitoring for appserver':
     dripstat_version         => '3.5.0',
@@ -36,6 +35,7 @@ This module can install DripStat's monitor agent on your servers. <br />
     dripstat_agent_loglevel  => '<loglevel>',
     dripstat_agent_auditmode => true|false,
     dripstat_use_ssl         => true|false,
+    dripstat_install         => true|false,
   }
 ```
 
