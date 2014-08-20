@@ -13,6 +13,7 @@ This module can install DripStat's monitor agent on your servers. <br />
 ## Table of Contents
 
 * [Installation](#installation)
+- [JVM_Setup] (#jvm_setup)
 * [Usage](#usage)
  
 ## Installation
@@ -20,6 +21,17 @@ This module can install DripStat's monitor agent on your servers. <br />
 1. Sign up for an account at http://dripstat.com/signup.html if you haven't yet.
 2. Apply the `dripstat` class to any nodes you want the agent installed on
 3. Login to your DripStat dashboard and you should see your servers show up in a few minutes.
+
+## JVM_Setup
+
+Add something like this to your java server startup script
+
+$web_server_home Is the root of your java web server
+```
+if [ -f $web_server_home/dripstat/dripstat.jar ]; then
+  JAVA_OPTS="${JAVA_OPTS}  -javaagent:${web_server_home}/dripstat/dripstat.jar"
+fi
+```
 
 ## Usage
 
