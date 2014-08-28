@@ -112,12 +112,12 @@ define dripstat::application_monitoring(
     }
   }
 
-  if ! $dripstat_install {
-    file { "${dripstat_app_root_dir}/dripstat/logs/dripstat.log" :
-      ensure  => absent,
-      before  => File["${dripstat_app_root_dir}/dripstat/logs"],
-    }
-  }
+  #if ! $dripstat_install {
+  #  file { "${dripstat_app_root_dir}/dripstat/logs/dripstat.log" :
+  #    ensure  => absent,
+  #    before  => File["${dripstat_app_root_dir}/dripstat/logs"],
+  #  }
+  #}
 
   file { "${dripstat_app_root_dir}/dripstat" :
     ensure => $dripstat_dir,
