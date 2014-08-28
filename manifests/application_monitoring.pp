@@ -71,12 +71,14 @@ define dripstat::application_monitoring(
 
   case $dripstat_install {
     false:{
-            $dripstat_dir  = absent
-            $dripstat_file = absent
+            $dripstat_dir   = absent
+            $dripstat_file  = absent
+            $dripstat_force = true
           }
     true: {
-            $dripstat_dir  = directory
-            $dripstat_file = file
+            $dripstat_dir   = directory
+            $dripstat_file  = file
+            $dripstat_force = true
           }
     default: {
       fail("Dripstat::Application_monitoring[${dripstat_install}]: parameter dripstat_install must be a boolean")
@@ -121,12 +123,14 @@ define dripstat::application_monitoring(
     ensure => $dripstat_dir,
     owner  => $dripstat_app_owner,
     group  => $dripstat_app_group,
+    force  => $dripstat_force,
   }
 
   file { "${dripstat_app_root_dir}/dripstat/logs" :
     ensure  => $dripstat_dir,
     owner   => $dripstat_app_owner,
     group   => $dripstat_app_group,
+    force   => $dripstat_force,
     require => File["${dripstat_app_root_dir}/dripstat"],
   }
 
